@@ -1,6 +1,6 @@
-# RAG System Project
+# RAG (Retrieval-Augmented Generation) App
 
-Simple RAG system
+Simple RAG app
 
 ## Quickstart
 
