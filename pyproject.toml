@@ -1,0 +1,23 @@
+[project]
+name = "rag-app"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "ollama>=0.6.1",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "ruff>=0.14.11",
+]
+
+[project.scripts]
+rag-app = "rag_app.main:main"
