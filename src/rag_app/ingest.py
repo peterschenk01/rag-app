@@ -1,10 +1,5 @@
 import urllib.request
-from rag_app.config import DATA_PATH
-
-DATA_URL = (
-    "https://huggingface.co/ngxson/demo_simple_rag_py/"
-    "resolve/main/cat-facts.txt"
-)
+from rag_app.config import DATA_PATH, DATA_URL
 
 
 def ensure_data_exists() -> None:

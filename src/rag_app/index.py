@@ -7,7 +7,7 @@ import numpy as np
 import faiss
 import ollama
 
-EMBEDDING_MODEL = "hf.co/CompendiumLabs/bge-base-en-v1.5-gguf"
+from rag_app.config import EMBEDDING_MODEL
 
 
 @dataclass
