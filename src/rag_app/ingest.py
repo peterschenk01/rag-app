@@ -1,30 +1,36 @@
 import urllib.request
-from rag_app.config import CAT_FACTS_PATH
+from rag_app.config import DATA_PATH
 
 DATA_URL = (
     "https://huggingface.co/ngxson/demo_simple_rag_py/"
     "resolve/main/cat-facts.txt"
 )
 
-def ensure_cat_facts():
-    if CAT_FACTS_PATH.exists():
+
+def ensure_data_exists() -> None:
+    if DATA_PATH.exists():
+        print(f"Dataset already exists at: {DATA_PATH}")
         return
 
-    CAT_FACTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    urllib.request.urlretrieve(DATA_URL, CAT_FACTS_PATH)
+    print(f"Dataset not found. Downloading from: {DATA_URL}")
+
+    DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    urllib.request.urlretrieve(DATA_URL, DATA_PATH)
 
 
-def load_cat_facts() -> list[str]:
-    ensure_cat_facts()
+def chunk_dataset(dataset: list[str]) -> list[str]:
+    chunks = dataset  # one line = one chunk
+    return chunks
 
-    if not CAT_FACTS_PATH.exists():
-        raise FileNotFoundError(
-            f"Dataset not found at {CAT_FACTS_PATH}. "
-            "Run the dataset download step first."
-        )
 
-    with CAT_FACTS_PATH.open("r", encoding="utf-8") as f:
+def load_dataset() -> list[str]:
+    print("Loading dataset...")
+    ensure_data_exists()
+
+    with DATA_PATH.open("r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
+    
+    chunks = chunk_dataset(lines)
 
-    print(f"Loaded {len(lines)} entries")
-    return lines
+    print(f"Dataset loaded.")
+    return chunks
