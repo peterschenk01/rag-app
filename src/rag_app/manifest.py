@@ -3,8 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-from typing import Any, Dict
-
+from typing import Any
 
 MANIFEST_FILENAME = "manifest.json"
 SCHEMA_VERSION = 1
@@ -27,7 +26,7 @@ def build_manifest(
     embedding_dim: int,
     metric: str,
     chunking_strategy: str,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     return {
         "schema_version": SCHEMA_VERSION,
         "dataset_hash": file_hash(dataset_path),
@@ -40,7 +39,7 @@ def build_manifest(
     }
 
 
-def save_manifest(storage_dir: Path, manifest: Dict[str, Any]) -> None:
+def save_manifest(storage_dir: Path, manifest: dict[str, Any]) -> None:
     storage_dir.mkdir(parents=True, exist_ok=True)
     path = storage_dir / MANIFEST_FILENAME
 
@@ -50,7 +49,7 @@ def save_manifest(storage_dir: Path, manifest: Dict[str, Any]) -> None:
     )
 
 
-def load_manifest(storage_dir: Path) -> Dict[str, Any]:
+def load_manifest(storage_dir: Path) -> dict[str, Any]:
     path = storage_dir / MANIFEST_FILENAME
     if not path.exists():
         raise FileNotFoundError("Manifest file not found")
@@ -60,8 +59,8 @@ def load_manifest(storage_dir: Path) -> Dict[str, Any]:
 
 def is_compatible(
     *,
-    stored: Dict[str, Any],
-    expected: Dict[str, Any],
+    stored: dict[str, Any],
+    expected: dict[str, Any],
 ) -> bool:
     if stored.get("schema_version") != expected.get("schema_version"):
         return False

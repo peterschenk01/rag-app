@@ -1,5 +1,6 @@
-from pathlib import Path
 import json
+from pathlib import Path
+
 import faiss
 
 from rag_app.index import FaissStore
@@ -32,10 +33,8 @@ def load_store(storage_dir: Path) -> FaissStore:
 
     index = faiss.read_index(str(storage_dir / "index.faiss"))
 
-    chunks = json.loads(
-        (storage_dir / "chunks.json").read_text(encoding="utf-8")
-    )
+    chunks = json.loads((storage_dir / "chunks.json").read_text(encoding="utf-8"))
 
-    print(f"Successfully loaded FAISS store.")
+    print("Successfully loaded FAISS store.")
 
     return FaissStore(index=index, chunks=chunks)

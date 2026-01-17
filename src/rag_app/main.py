@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from rag_app.config import STORAGE_DIR, DATA_PATH, EMBEDDING_MODEL
+from rag_app.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
+from rag_app.index import FaissStore, build_faiss_store, search
 from rag_app.ingest import load_dataset
-from rag_app.index import build_faiss_store, search, FaissStore
+from rag_app.manifest import build_manifest, is_compatible, load_manifest, save_manifest
 from rag_app.persist import load_store, save_store, store_exists
-from rag_app.manifest import build_manifest, save_manifest, load_manifest, is_compatible
 
 
 def get_expected_manifest() -> dict:

@@ -1,4 +1,5 @@
 import urllib.request
+
 from rag_app.config import DATA_PATH, DATA_URL
 
 
@@ -24,8 +25,8 @@ def load_dataset() -> list[str]:
 
     with DATA_PATH.open("r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
-    
+
     chunks = chunk_dataset(lines)
 
-    print(f"Dataset loaded.")
+    print("Dataset loaded.")
     return chunks

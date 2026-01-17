@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Tuple
 
-import numpy as np
 import faiss
+import numpy as np
 import ollama
 
 from rag_app.config import EMBEDDING_MODEL
@@ -13,16 +12,16 @@ from rag_app.config import EMBEDDING_MODEL
 @dataclass
 class FaissStore:
     index: faiss.Index
-    chunks: List[str]
+    chunks: list[str]
 
 
-def embed_texts(texts: List[str]) -> np.ndarray:
+def embed_texts(texts: list[str]) -> np.ndarray:
     resp = ollama.embed(model=EMBEDDING_MODEL, input=texts)
     embs = np.array(resp["embeddings"], dtype="float32")  # (N, D)
     return embs
 
 
-def build_faiss_store(chunks: List[str]) -> FaissStore:
+def build_faiss_store(chunks: list[str]) -> FaissStore:
     print("Building FAISS store...")
 
     vectors = embed_texts(chunks)  # (N, D)
@@ -41,8 +40,8 @@ def build_faiss_store(chunks: List[str]) -> FaissStore:
     return FaissStore(index=index, chunks=chunks)
 
 
-def search(store: FaissStore, query: str, k: int = 5) -> List[Tuple[str, float]]:
-    print(f"Searching store with query: \"{query}\"")
+def search(store: FaissStore, query: str, k: int = 5) -> list[tuple[str, float]]:
+    print(f'Searching store with query: "{query}"')
     print(f"Retrieving top {k} results...")
 
     q = embed_texts([query])  # (1, D)
@@ -50,13 +49,13 @@ def search(store: FaissStore, query: str, k: int = 5) -> List[Tuple[str, float]]
 
     scores, ids = store.index.search(q, k)
 
-    results: List[Tuple[str, float]] = []
+    results: list[tuple[str, float]] = []
 
-    for idx, score in zip(ids[0].tolist(), scores[0].tolist()):
+    for idx, score in zip(ids[0].tolist(), scores[0].tolist(), strict=True):
         if idx == -1:
             continue
         results.append((store.chunks[idx], float(score)))
 
     print(f"Retrieved {len(results)} result(s).")
-    
+
     return results
