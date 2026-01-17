@@ -7,12 +7,9 @@ from rag_app.index import FaissStore
 
 
 def store_exists(storage_dir: Path) -> bool:
-    index_path = storage_dir / "index.faiss"
-    chunks_path = storage_dir / "chunks.json"
-
-    exists = index_path.exists() and chunks_path.exists()
-
-    return exists
+    return (storage_dir / "index.faiss").exists() and (
+        storage_dir / "chunks.json"
+    ).exists()
 
 
 def save_store(store: FaissStore, storage_dir: Path) -> None:
