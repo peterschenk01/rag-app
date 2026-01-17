@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path
+from typing import Any
+
 from rag_app.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
 from rag_app.index import FaissStore, build_faiss_store, search
 from rag_app.ingest import load_dataset
@@ -7,26 +10,24 @@ from rag_app.manifest import build_manifest, is_compatible, load_manifest, save_
 from rag_app.persist import load_store, save_store, store_exists
 
 
-def get_expected_manifest() -> dict:
+def make_manifest(*, dataset_path: Path, embedding_dim: int) -> dict[str, Any]:
     return build_manifest(
-        dataset_path=DATA_PATH,
+        dataset_path=dataset_path,
         embedding_model=EMBEDDING_MODEL,
-        embedding_dim=768,
+        embedding_dim=embedding_dim,
         metric="cosine",
         chunking_strategy="one-line",
     )
+
+
+def get_expected_manifest() -> dict[str, Any]:
+    return make_manifest(dataset_path=DATA_PATH, embedding_dim=768)
 
 
 def build_and_persist_store(dataset: list[str]) -> FaissStore:
     store = build_faiss_store(dataset)
 
-    manifest = build_manifest(
-        dataset_path=DATA_PATH,
-        embedding_model=EMBEDDING_MODEL,
-        embedding_dim=store.index.d,
-        metric="cosine",
-        chunking_strategy="one-line",
-    )
+    manifest = make_manifest(dataset_path=DATA_PATH, embedding_dim=store.index.d)
 
     save_store(store, STORAGE_DIR)
     save_manifest(STORAGE_DIR, manifest)
