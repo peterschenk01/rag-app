@@ -15,6 +15,10 @@ def ensure_data_exists() -> None:
 
 
 def chunk_dataset(dataset: list[str]) -> list[str]:
+    """Chunking strategy: one line per chunk.
+
+    This is intentionally simple and acts as a single place to evolve chunking later.
+    """
     chunks = dataset  # one line = one chunk
     return chunks
 
