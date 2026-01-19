@@ -9,7 +9,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def retrieve(store: FaissStore, query: str, k: int = 2) -> list[tuple[str, float]]:
+def retrieve(store: FaissStore, query: str, k: int = 3) -> list[tuple[str, float]]:
     logger.info(f'Searching store with query: "{query}"')
     logger.info(f"Retrieving top {k} results...")
 
