@@ -5,6 +5,10 @@ import faiss
 
 from rag_system.index import FaissStore
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def store_exists(storage_dir: Path) -> bool:
     return (storage_dir / "index.faiss").exists() and (
@@ -13,7 +17,7 @@ def store_exists(storage_dir: Path) -> bool:
 
 
 def save_store(store: FaissStore, storage_dir: Path) -> None:
-    print(f"Storing FAISS store to: {storage_dir}")
+    logger.info(f"Storing FAISS store to: {storage_dir}")
 
     storage_dir.mkdir(parents=True, exist_ok=True)
 
@@ -26,12 +30,12 @@ def save_store(store: FaissStore, storage_dir: Path) -> None:
 
 
 def load_store(storage_dir: Path) -> FaissStore:
-    print(f"Loading FAISS store from: {storage_dir}")
+    logger.info(f"Loading FAISS store from: {storage_dir}")
 
     index = faiss.read_index(str(storage_dir / "index.faiss"))
 
     chunks = json.loads((storage_dir / "chunks.json").read_text(encoding="utf-8"))
 
-    print("Successfully loaded FAISS store.")
+    logger.info("Successfully loaded FAISS store.")
 
     return FaissStore(index=index, chunks=chunks)

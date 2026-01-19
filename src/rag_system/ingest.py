@@ -2,13 +2,17 @@ import urllib.request
 
 from rag_system.config import DATA_PATH, DATA_URL
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def ensure_data_exists() -> None:
     if DATA_PATH.exists():
-        print(f"Dataset already exists at: {DATA_PATH}")
+        logger.info(f"Dataset already exists at: {DATA_PATH}")
         return
 
-    print(f"Dataset not found. Downloading from: {DATA_URL}")
+    logger.info(f"Dataset not found. Downloading from: {DATA_URL}")
 
     DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
     urllib.request.urlretrieve(DATA_URL, DATA_PATH)
@@ -24,7 +28,7 @@ def chunk_dataset(dataset: list[str]) -> list[str]:
 
 
 def load_dataset() -> list[str]:
-    print("Loading dataset...")
+    logger.info("Loading dataset...")
     ensure_data_exists()
 
     with DATA_PATH.open("r", encoding="utf-8") as f:
@@ -32,5 +36,5 @@ def load_dataset() -> list[str]:
 
     chunks = chunk_dataset(lines)
 
-    print("Dataset loaded.")
+    logger.info("Dataset loaded.")
     return chunks

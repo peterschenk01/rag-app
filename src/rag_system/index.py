@@ -8,6 +8,10 @@ import ollama
 
 from rag_system.config import EMBEDDING_MODEL
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 @dataclass
 class FaissStore:
@@ -22,7 +26,7 @@ def embed_texts(texts: list[str]) -> np.ndarray:
 
 
 def build_faiss_store(chunks: list[str]) -> FaissStore:
-    print("Building FAISS store...")
+    logger.info("Building FAISS store...")
 
     vectors = embed_texts(chunks)  # (N, D)
 

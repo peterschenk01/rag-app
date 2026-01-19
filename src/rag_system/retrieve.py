@@ -4,10 +4,14 @@ import faiss
 
 from rag_system.index import FaissStore, embed_texts
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def retrieve(store: FaissStore, query: str, k: int = 2) -> list[tuple[str, float]]:
-    print(f'Searching store with query: "{query}"')
-    print(f"Retrieving top {k} results...")
+    logger.info(f'Searching store with query: "{query}"')
+    logger.info(f"Retrieving top {k} results...")
 
     q = embed_texts([query])  # (1, D)
     faiss.normalize_L2(q)
@@ -21,6 +25,6 @@ def retrieve(store: FaissStore, query: str, k: int = 2) -> list[tuple[str, float
             continue
         results.append((store.chunks[idx], float(score)))
 
-    print(f"Retrieved {len(results)} result(s).")
+    logger.info(f"Retrieved {len(results)} result(s).")
 
     return results

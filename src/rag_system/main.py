@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +17,9 @@ from rag_system.manifest import (
 )
 from rag_system.persist import load_store, save_store, store_exists
 from rag_system.retrieve import retrieve
+
+setup_logging(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def make_manifest(*, dataset_path: Path, embedding_dim: int) -> dict[str, Any]:
@@ -49,13 +53,13 @@ def get_or_build_store(dataset: list[str]) -> FaissStore:
         try:
             stored = load_manifest(STORAGE_DIR)
         except FileNotFoundError:
-            print("Manifest missing! Rebuilding FAISS store.")
+            logger.info("Manifest missing! Rebuilding FAISS store.")
         else:
             if is_compatible(stored=stored, expected=expected):
-                print("Manifest matches! Using persisted FAISS store.")
+                logger.info("Manifest matches! Using persisted FAISS store.")
                 return load_store(STORAGE_DIR)
 
-            print("Persisted FAISS store incompatible! Rebuilding...")
+            logger.info("Persisted FAISS store incompatible! Rebuilding...")
 
     return build_and_persist_store(dataset)
 
