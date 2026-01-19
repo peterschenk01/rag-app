@@ -79,7 +79,7 @@ def main():
         retrieved_knowledge = retrieve(store, input_query)
 
         for chunk, similarity in retrieved_knowledge:
-            print(f" - (similarity: {similarity:.2f}) {chunk}")
+            logger.info(f" - (similarity: {similarity:.2f}) {chunk}")
 
         generate(input_query=input_query, context=retrieved_knowledge)
 
