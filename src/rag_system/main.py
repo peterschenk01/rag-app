@@ -4,8 +4,10 @@ from pathlib import Path
 from typing import Any
 
 from rag_system.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
+from rag_system.generate import generate
 from rag_system.index import FaissStore, build_faiss_store
 from rag_system.ingest import load_dataset
+from rag_system.logging_config import setup_logging
 from rag_system.manifest import (
     build_manifest,
     is_compatible,
@@ -62,11 +64,20 @@ def main():
     dataset = load_dataset()
     store = get_or_build_store(dataset)
 
-    query = "How much do cats sleep?"
-    hits = retrieve(store, query, k=5)
+    while True:
+        input_query = input("Ask me a question (or 'quit'): ")
 
-    for chunk, score in hits:
-        print(f"[{score}] {chunk}")
+        if not input_query:
+            continue
+        if input_query.strip().lower() in {"exit", "quit", "q"}:
+            break
+
+        retrieved_knowledge = retrieve(store, input_query)
+
+        for chunk, similarity in retrieved_knowledge:
+            print(f" - (similarity: {similarity:.2f}) {chunk}")
+
+        generate(input_query=input_query, context=retrieved_knowledge)
 
 
 if __name__ == "__main__":

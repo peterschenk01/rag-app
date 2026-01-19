@@ -5,7 +5,7 @@ import faiss
 from rag_system.index import FaissStore, embed_texts
 
 
-def retrieve(store: FaissStore, query: str, k: int = 5) -> list[tuple[str, float]]:
+def retrieve(store: FaissStore, query: str, k: int = 2) -> list[tuple[str, float]]:
     print(f'Searching store with query: "{query}"')
     print(f"Retrieving top {k} results...")
 
