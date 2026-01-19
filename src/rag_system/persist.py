@@ -3,7 +3,7 @@ from pathlib import Path
 
 import faiss
 
-from rag_app.index import FaissStore
+from rag_system.index import FaissStore
 
 
 def store_exists(storage_dir: Path) -> bool:

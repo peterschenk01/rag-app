@@ -1,4 +1,4 @@
-# rag-app
+# Retrievel-Augmented Generation System
 
 A **simple Retrieval-Augmented Generation (RAG) application** built in Python using FAISS for vector search and Ollama for embeddings and LLM inference.
 
@@ -27,8 +27,8 @@ This repository implements:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/peterschenk01/rag-app.git
-cd rag-app
+git clone https://github.com/peterschenk01/rag-system.git
+cd rag-system
 ```
 
 ### 2. Setup Environment (UV)
@@ -59,7 +59,7 @@ curl -L -o data/cat-facts.txt https://huggingface.co/ngxson/demo_simple_rag_py/r
 
 ### 5. Run the App
 ```bash
-uv run rag-app
+uv run rag-system
 ```
 
 This will:

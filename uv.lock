@@ -480,7 +480,7 @@ wheels = [
 ]
 
 [[package]]
-name = "rag-app"
+name = "rag-system"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

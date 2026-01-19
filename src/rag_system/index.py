@@ -6,7 +6,7 @@ import faiss
 import numpy as np
 import ollama
 
-from rag_app.config import EMBEDDING_MODEL
+from rag_system.config import EMBEDDING_MODEL
 
 
 @dataclass

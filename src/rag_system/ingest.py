@@ -1,6 +1,6 @@
 import urllib.request
 
-from rag_app.config import DATA_PATH, DATA_URL
+from rag_system.config import DATA_PATH, DATA_URL
 
 
 def ensure_data_exists() -> None:

@@ -1,5 +1,5 @@
 [project]
-name = "rag-app"
+name = "rag-system"
 version = "0.1.0"
 requires-python = ">=3.10"
 dependencies = [
@@ -22,7 +22,7 @@ dev = [
 ]
 
 [project.scripts]
-rag-app = "rag_app.main:main"
+rag-system = "rag_system.main:main"
 
 [tool.ruff]
 line-length = 88

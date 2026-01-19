@@ -3,11 +3,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from rag_app.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
-from rag_app.index import FaissStore, build_faiss_store, search
-from rag_app.ingest import load_dataset
-from rag_app.manifest import build_manifest, is_compatible, load_manifest, save_manifest
-from rag_app.persist import load_store, save_store, store_exists
+from rag_system.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
+from rag_system.index import FaissStore, build_faiss_store, search
+from rag_system.ingest import load_dataset
+from rag_system.manifest import build_manifest, is_compatible, load_manifest, save_manifest
+from rag_system.persist import load_store, save_store, store_exists
 
 
 def make_manifest(*, dataset_path: Path, embedding_dim: int) -> dict[str, Any]:
