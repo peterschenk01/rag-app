@@ -4,10 +4,16 @@ from pathlib import Path
 from typing import Any
 
 from rag_system.config import DATA_PATH, EMBEDDING_MODEL, STORAGE_DIR
-from rag_system.index import FaissStore, build_faiss_store, search
+from rag_system.index import FaissStore, build_faiss_store
 from rag_system.ingest import load_dataset
-from rag_system.manifest import build_manifest, is_compatible, load_manifest, save_manifest
+from rag_system.manifest import (
+    build_manifest,
+    is_compatible,
+    load_manifest,
+    save_manifest,
+)
 from rag_system.persist import load_store, save_store, store_exists
+from rag_system.retrieve import retrieve
 
 
 def make_manifest(*, dataset_path: Path, embedding_dim: int) -> dict[str, Any]:
@@ -57,7 +63,7 @@ def main():
     store = get_or_build_store(dataset)
 
     query = "How much do cats sleep?"
-    hits = search(store, query, k=5)
+    hits = retrieve(store, query, k=5)
 
     for chunk, score in hits:
         print(f"[{score}] {chunk}")
