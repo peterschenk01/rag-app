@@ -1,90 +1,134 @@
-# Retrievel-Augmented Generation System
+# Retrieval-Augmented Generation (RAG) System
 
-A **Retrieval-Augmented Generation (RAG) System** built in Python using FAISS for vector search and Ollama for embeddings and LLM inference.
+A **Retrieval-Augmented Generation (RAG)** chatbot built in Python using **FAISS** for vector similarity search and **Ollama** for embeddings and LLM inference.
 
+---
 
 ## Project Overview
 
-**RAG (Retrieval-Augmented Generation)** combines information retrieval with generative models. Instead of relying only on the LLM’s training data, a RAG system retrieves relevant text from an external corpus and uses that *grounded* context to answer queries.
+**Retrieval-Augmented Generation (RAG)** combines classical information retrieval with large language models. Instead of relying solely on the LLM’s internal knowledge, the system retrieves relevant chunks from an external corpus and injects them as context for generation.
 
-This repository implements:
-- Data ingestion and chunking
-- Embedding with Ollama
-- Vector indexing with FAISS
-- Persistent FAISS store with manifest validation
-- Simple query interface
+This project includes:
 
+- Dataset ingestion and text chunking
+- Embedding generation via Ollama
+- Vector indexing and similarity search using FAISS
+- Persistent FAISS index with manifest-based validation
+- Interactive terminal-based chatbot
+- Unit tests for each module
+- Continuous Integration (CI) workflow
+- Pre-commit hooks
+
+---
 
 ## Technology Stack
 
-- [**FAISS**](https://github.com/facebookresearch/faiss) — high-performance vector similarity search
-- [**Ollama**](https://ollama.com/) — embeddings & generative inference
-- [**UV**](https://docs.astral.sh/uv/) — development environment manager
+- **FAISS** — vector similarity search
+- **Ollama** — embeddings and LLM inference
+- **UV** — dependency and environment management
+- **Pytest** — testing
+- **Ruff** — linting and formatting
+- **Pre-commit** — local enforcement of quality checks
 
+---
 
 ## Quickstart
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/peterschenk01/rag-system.git
 cd rag-system
 ```
 
-### 2. Setup Environment (UV)
+---
 
-Install dependencies and sync the project:
+### 2. Install dependencies (UV)
 
 ```bash
 uv sync
 ```
 
-### 3. Install Ollama & Pull Models
+---
 
-Follow the [Ollama](https://ollama.com/download) instructions for installation. Then pull required models:
+### 3. Ollama Setup
+
+Install Ollama: [https://ollama.com/download](https://ollama.com/download)
+
+Pull the models used by the system:
 
 ```bash
 ollama pull hf.co/CompendiumLabs/bge-base-en-v1.5-gguf
 ollama pull hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF
 ```
 
-### 4. Get the Dataset
+---
 
-This project uses a small public text dataset of cat facts. Download it:
+### 4. Dataset
+
+Example dataset (cat facts):
 
 ```bash
 mkdir -p data
 curl -L -o data/cat-facts.txt https://huggingface.co/ngxson/demo_simple_rag_py/resolve/main/cat-facts.txt
 ```
 
-### 5. Run the App
+---
+
+### 5. Running the Chatbot
+
 ```bash
 uv run rag-system
 ```
 
-This will:
-- Load the dataset
-- Build or load the FAISS index
-- Execute a sample query
-
-## How It Works
-
-1. Ingest – load the dataset and prepare text chunks
-2. Index – embed chunks and build FAISS index
-3. Persist – save the FAISS index + chunk mapping
-4. Manifest – fingerprint dataset and config to validate store
-5. Query – embed query, search FAISS, return results
+---
 
 ## Development
 
-This project uses CI and pre-commit hooks to enforce code quality and consistency.
+### Install development dependencies
 
-After cloning the repository:
-
-``` bash
+```bash
 uv sync --dev
+```
+
+---
+
+### Pre-commit hooks
+
+```bash
 uv run pre-commit install
 ```
+
+Pre-commit runs formatting, linting, and other checks automatically before commits.
+
+---
+
+### Linting & formatting (Ruff)
+
+```bash
+uv run ruff check .
+uv run ruff format .
+```
+
+---
+
+### Running tests
+
+```bash
+uv run pytest
+```
+
+---
+
+### Continuous Integration
+
+A CI workflow is included to ensure:
+
+* Tests pass
+* Ruff linting succeeds
+* Code quality matches local pre-commit checks
+
+---
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
